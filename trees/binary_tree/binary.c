@@ -56,6 +56,29 @@ ui32 ABPHeight(PtABPNode root) {
 		return rHeight + 1;
 }
 
+PtABPNode KMinRec(PtABPNode root, ui32 pk) {
+	ui32 nleft = ABPSize(root);
+
+	if (pk == nleft + 1) return root;
+
+	if (pk <= nleft) 
+		return KMinRec(root->left, pk);
+	else
+		return KMinRec(root->right, pk-nleft-1);
+}
+
+#define SIZE(node) ABPSize(node)
+
+PtABPNode ABPMin(PtABPNode root, ui32 k) {
+	if (k < 1 || SIZE(root) <  k) return NULL;
+	else
+		return KMinRec(root, k); 
+}
+
+PtABPNode ABPMinE(PtABPNode root) {
+	return ABPMin(root, 1);
+}
+
 int main(int argc, char const *argv[])
 {
 	PtABPNode root = PtABPNodeCreate(10);
