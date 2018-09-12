@@ -79,6 +79,24 @@ PtABPNode ABPMinE(PtABPNode root) {
 	return ABPMin(root, 1);
 }
 
+#define NEXT(node, e) \
+	(*node).element > e ? node->left : node->right
+
+void ABPDeleteRep(PtABPNode *root, int e) {
+
+	PtABPNode deleteNode = *root;
+	while (deleteNode != NULL && (*deleteNode).element != e) {
+
+		/*if ((*deleteNode).element > e) 
+			deleteNode = deleteNode->left;
+		else
+			deleteNode = deleteNode->right;*/
+		deleteNode = NEXT(deleteNode, e);
+	}
+
+	printf("%d\n", deleteNode->element);
+}
+
 int main(int argc, char const *argv[])
 {
 	PtABPNode root = PtABPNodeCreate(10);
@@ -90,8 +108,8 @@ int main(int argc, char const *argv[])
 
 	PtABPNode lleft = PtABPNodeCreate(4);
 	root->left->left = lleft;
-
-	assert (ABPHeight(root) == 3);
-	assert (ABPSize(root) == 4);
+	ABPDeleteRep(&root, 4);
+	//assert (ABPHeight(root) == 3);
+	//assert (ABPSize(root) == 4);
 	return 0;
 }
